@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_viewpager2.view_pager
@@ -24,7 +25,13 @@ class PreviewPagesFragment : Fragment() {
       // Set offscreen page limit to at least 1, so adjacent pages are always laid out
       offscreenPageLimit = 1
       adapter = Adapter()
+    }
+  }
 
+  override fun onResume() {
+    super.onResume()
+
+    view_pager.postDelayed(1000) {
       val recyclerView = view_pager.getChildAt(0) as RecyclerView
       recyclerView.apply {
         val padding = resources.getDimensionPixelOffset(R.dimen.halfPageMargin) +
