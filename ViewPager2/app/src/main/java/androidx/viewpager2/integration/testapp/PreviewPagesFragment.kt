@@ -40,6 +40,8 @@ class PreviewPagesFragment : Fragment() {
         // TODO: expose in later versions not to rely on getChildAt(0) which might break
         setPadding(padding, 0, padding, 0)
         clipToPadding = false
+
+        scrollToPosition(view_pager.currentItem)
       }
     }
   }
