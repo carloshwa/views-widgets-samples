@@ -19,9 +19,11 @@ package androidx.viewpager2.integration.testapp
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.postDelayed
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.android.synthetic.main.activity_viewpager2.view_pager
 
 class PreviewPagesActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,16 +32,23 @@ class PreviewPagesActivity : FragmentActivity() {
         findViewById<ViewPager2>(R.id.view_pager).apply {
             // Set offscreen page limit to at least 1, so adjacent pages are always laid out
             offscreenPageLimit = 1
-            val recyclerView = getChildAt(0) as RecyclerView
+            adapter = Adapter()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        view_pager.postDelayed(1000L) {
+            val recyclerView = view_pager.getChildAt(0) as RecyclerView
             recyclerView.apply {
                 val padding = resources.getDimensionPixelOffset(R.dimen.halfPageMargin) +
-                        resources.getDimensionPixelOffset(R.dimen.peekOffset)
+                    resources.getDimensionPixelOffset(R.dimen.peekOffset)
                 // setting padding on inner RecyclerView puts overscroll effect in the right place
                 // TODO: expose in later versions not to rely on getChildAt(0) which might break
                 setPadding(padding, 0, padding, 0)
                 clipToPadding = false
             }
-            adapter = Adapter()
         }
     }
 
